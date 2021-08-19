@@ -1,5 +1,8 @@
 # __Pokojíky REST API__
 
+>*REST API for our final semester project in the course PB138: Modern Markup Languages.*
+>
+>*Authentiction and image upload added by [Juraj Marcin](https://github.com/jurajmarcin)*
 
 &nbsp;
 > ## Users
@@ -147,9 +150,4 @@ Response: <empty>
 ### `PUT` /reservations/{reservationId} Change reservation status
 Body: RerservationStatus
 
-- *Sample response:*
-```js
-{
-  
-}
-```
+Response: <empty>
