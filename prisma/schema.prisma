@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+enum Type {
+  PRIVATE_ROOM
+  SHARED_ROOM
+  WHOLE_PLACE
+}
+
+enum ReservationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  CANCELED
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+
+  firstName  String
+  lastName   String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  deletedAt DateTime?
+
+  roomsOwned Room[]
+
+  reservations Reservation[]
+}
+
+
+model Room {
+  id          Int       @id @default(autoincrement())
+  name        String
+
+  location    Location  @relation(fields: [locationId], references: [id])
+  locationId  Int
+
+  type        Type      @default(PRIVATE_ROOM)
+  description String
+  beds        Int
+  price       Int
+
+  host        User      @relation(fields: [hostId], references: [id])
+  hostId      Int
+
+  available    Boolean       @default(true)
+  reservations Reservation[]
+
+  // availableFrom DateTime  @default(now())
+  // availableTo DateTime
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  deletedAt DateTime?
+
+  photos       RoomPhoto[]
+}
+
+
+model RoomPhoto {
+  id         Int        @id @default(autoincrement())
+  path       String
+  isMain     Boolean    @default(false)
+
+  uploadedAt DateTime   @default(now())
+  deletedAt  DateTime?
+
+  room    Room    @relation(fields: [roomId], references: [id])
+  roomId  Int
+}
+
+
+model Location {
+  id      Int    @id @default(autoincrement())
+
+  country String
+  city    String
+  street  String
+  // zipCode String
+
+  rooms Room[]
+}
+
+
+model Reservation {
+  id        Int       @id @default(autoincrement())
+
+  guest     User      @relation(fields: [guestId], references: [id])
+  guestId   Int
+
+  room      Room      @relation(fields: [roomId], references: [id])
+  roomId    Int
+
+  createdAt DateTime  @default(now())
+
+  from      DateTime
+  to        DateTime
+  status    ReservationStatus   @default(PENDING)
+}

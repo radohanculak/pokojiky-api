@@ -1,0 +1,88 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table User {
+  id Int [pk, increment]
+  email String [unique, not null]
+  password String [not null]
+  firstName String [not null]
+  lastName String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
+  deletedAt DateTime
+  roomsOwned Room [not null]
+  reservations Reservation [not null]
+}
+
+Table Room {
+  id Int [pk, increment]
+  name String [not null]
+  location Location [not null]
+  locationId Int [not null]
+  type Type [not null, default: 'PRIVATE_ROOM']
+  description String [not null]
+  beds Int [not null]
+  price Int [not null]
+  host User [not null]
+  hostId Int [not null]
+  available Boolean [not null, default: true]
+  reservations Reservation [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
+  deletedAt DateTime
+  photos RoomPhoto [not null]
+}
+
+Table RoomPhoto {
+  id Int [pk, increment]
+  path String [not null]
+  isMain Boolean [not null, default: false]
+  uploadedAt DateTime [default: `now()`, not null]
+  deletedAt DateTime
+  room Room [not null]
+  roomId Int [not null]
+}
+
+Table Location {
+  id Int [pk, increment]
+  country String [not null]
+  city String [not null]
+  street String [not null]
+  rooms Room [not null]
+}
+
+Table Reservation {
+  id Int [pk, increment]
+  guest User [not null]
+  guestId Int [not null]
+  room Room [not null]
+  roomId Int [not null]
+  createdAt DateTime [default: `now()`, not null]
+  from DateTime [not null]
+  to DateTime [not null]
+  status ReservationStatus [not null, default: 'PENDING']
+}
+
+Enum Type {
+  PRIVATE_ROOM
+  SHARED_ROOM
+  WHOLE_PLACE
+}
+
+Enum ReservationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  CANCELED
+}
+
+Ref: Room.locationId > Location.id
+
+Ref: Room.hostId > User.id
+
+Ref: RoomPhoto.roomId > Room.id
+
+Ref: Reservation.guestId > User.id
+
+Ref: Reservation.roomId > Room.id

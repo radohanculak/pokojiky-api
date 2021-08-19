@@ -1,0 +1,48 @@
+{
+  "name": "pokojiky-api",
+  "version": "1.0.0",
+  "description": "Pokojíky App REST API",
+  "main": "src/main.ts",
+  "scripts": {
+    "start": "ts-node src/main.ts",
+    "build": "tsc",
+    "seed": "prisma db seed --preview-feature",
+    "migrate": "prisma migrate dev",
+    "reset": "prisma migrate reset",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Radovan Hanculak",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cors": "^2.8.10",
+    "@types/express": "^4.17.12",
+    "@types/express-fileupload": "^1.1.6",
+    "@types/faker": "^5.5.6",
+    "@types/jsonwebtoken": "^8.5.4",
+    "@types/node": "^15.12.2",
+    "@types/passport": "^1.0.7",
+    "@types/passport-jwt": "^3.0.6",
+    "@types/uuid": "^8.3.0",
+    "@typescript-eslint/eslint-plugin": "^4.27.0",
+    "eslint": "^7.29.0",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-plugin-import": "^2.23.4",
+    "prisma": "^2.25.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^2.25.0",
+    "argon2": "^0.28.2",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "faker": "^5.5.3",
+    "jsonwebtoken": "^8.5.1",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.3",
+    "uuid": "^8.3.2"
+  }
+}
